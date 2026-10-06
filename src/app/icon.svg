@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="BrightSmile Dental Clinic">
+  <circle cx="16" cy="16" r="16" fill="#e4eff5" />
+  <circle cx="16" cy="16" r="15.25" fill="none" stroke="rgba(15,42,67,0.12)" stroke-width="1.5" />
+  <text
+    x="16"
+    y="16"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif"
+    font-size="19"
+    font-weight="600"
+    fill="#2f7f9e"
+  >B</text>
+</svg>

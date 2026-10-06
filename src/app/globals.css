@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f4ee;
+  --foreground: #0f2a43;
+  --primary: #2f7f9e;
+  --primary-foreground: #ffffff;
+  --surface: #e4eff5;
+  --card: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #0f2a43;
+  --muted: #f1f0ec;
+  --muted-foreground: #536572;
+  --accent: #e8896b;
+  --accent-foreground: #0f2a43;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: rgba(15, 42, 67, 0.12);
+  --input: rgba(15, 42, 67, 0.12);
+  --ring: rgba(47, 127, 158, 0.35);
+  /* Radius tokens: the only two radii in the system.
+     sm = photos, images, tags. md = cards, inputs, buttons, banners.
+     Use as rounded-[var(--radius-sm)] / rounded-[var(--radius-md)]. */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  /* Navbar height: py-4 (32px) + h-10 (40px) + 1px border */
+  --navbar-h: 73px;
+}
+
+/*
+ * Full-viewport hero height.
+ * Written via @supports so the 100vh fallback cannot be collapsed away by the
+ * CSS minifier, which treats a bare duplicate declaration as redundant.
+ */
+.hero-svh {
+  min-height: 100vh;
+}
+
+@supports (min-height: 100svh) {
+  .hero-svh {
+    min-height: 100svh;
+  }
+}
+
+/* Cap on very tall displays so the hero stays proportionate on large monitors. */
+@media (min-height: 1200px) {
+  .hero-svh {
+    min-height: 1200px;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-figtree);
+  --font-display: var(--font-fraunces);
+
+  --animate-accordion-down: accordion-down 0.22s ease-out;
+  --animate-accordion-up: accordion-up 0.22s ease-out;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-figtree), sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+section,
+header,
+footer {
+  scroll-margin-top: 6rem;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    background: rgba(47, 127, 158, 0.18);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

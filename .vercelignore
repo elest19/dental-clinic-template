@@ -1,0 +1,16 @@
+# Files excluded from Vercel deployments. Build outputs and local
+# tooling are never uploaded; source is deployed via `pnpm run build`.
+.next
+node_modules
+
+# Local agent/tooling folders (also git-ignored, belt and suspenders)
+.agents/
+.impeccable/
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
