@@ -66,7 +66,8 @@ export function Footer() {
       </div>
       <div className="border-t border-border bg-white/40">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-xs text-muted-foreground sm:px-6 lg:px-8">
-          <p>© 2026 {siteConfig.name}. All rights reserved.</p>
+          {/* <p>© 2026 {siteConfig.name}. All rights reserved.</p> */}
+          <p>© 2026 John Paul Ruiz - Dental Clinic Template #1. All rights reserved.</p>
           <p>Open Monday to Saturday.</p>
         </div>
       </div>
