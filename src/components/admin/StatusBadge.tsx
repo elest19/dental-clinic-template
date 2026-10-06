@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { AppointmentStatus } from "@/lib/data/appointments";
 
 const statusStyles: Record<AppointmentStatus, string> = {
-  pending: "border border-amber-200 bg-amber-50 text-amber-700",
+  pending: "border border-[#E8896B]/30 bg-[#FDE7DF] text-[#B75E3B]",
   confirmed: "border border-emerald-200 bg-emerald-50 text-emerald-700",
   completed: "border border-[#14284B]/15 bg-[#14284B]/5 text-[#14284B]",
   cancelled: "border border-red-200 bg-red-50 text-red-700",

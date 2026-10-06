@@ -36,18 +36,20 @@ export function AppointmentTable({
   selectedId,
   onSelect,
   onStatusAction,
+  onCancelRequest,
   busyAction,
 }: {
   appointments: Appointment[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   onStatusAction: (id: string, status: AppointmentStatus) => void;
+  onCancelRequest: (appointment: Appointment) => void;
   busyAction: { id: string; status: AppointmentStatus } | null;
 }) {
   if (appointments.length === 0) {
     return (
       <div className="rounded-[var(--radius-md)] border border-dashed border-border bg-[#F9FAFB] p-8 text-center text-muted-foreground">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#EAF7F6] text-[#14284B]">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F7E8E1] text-[#14284B]">
           <Search className="h-5 w-5" aria-hidden="true" />
         </div>
         <h3 className="mt-4 text-lg font-semibold text-[#14284B]">No appointment requests match your filters</h3>
@@ -117,7 +119,7 @@ export function AppointmentTable({
                         <Button
                           type="button"
                           size="sm"
-                          className="bg-[#14284B] text-white hover:bg-[#1d355e]"
+                          className="bg-[#B75E3B] text-white hover:bg-[#A55333] disabled:bg-[#D8A18B]"
                           onClick={(event) => {
                             event.stopPropagation();
                             onStatusAction(appointment.id, "confirmed");
@@ -132,10 +134,7 @@ export function AppointmentTable({
                           variant="outline"
                           onClick={(event) => {
                             event.stopPropagation();
-                            const shouldCancel = window.confirm(`Cancel the appointment for ${appointment.fullName}?`);
-                            if (shouldCancel) {
-                              onStatusAction(appointment.id, "cancelled");
-                            }
+                            onCancelRequest(appointment);
                           }}
                           disabled={isBusy}
                         >
@@ -212,7 +211,7 @@ export function AppointmentTable({
                     <Button
                       type="button"
                       size="sm"
-                      className="bg-[#14284B] text-white hover:bg-[#1d355e]"
+                      className="bg-[#B75E3B] text-white hover:bg-[#A55333] disabled:bg-[#D8A18B]"
                       onClick={() => onStatusAction(appointment.id, "confirmed")}
                       disabled={isBusy}
                     >
@@ -222,12 +221,7 @@ export function AppointmentTable({
                       type="button"
                       size="sm"
                       variant="outline"
-                      onClick={() => {
-                        const shouldCancel = window.confirm(`Cancel the appointment for ${appointment.fullName}?`);
-                        if (shouldCancel) {
-                          onStatusAction(appointment.id, "cancelled");
-                        }
-                      }}
+                      onClick={() => onCancelRequest(appointment)}
                       disabled={isBusy}
                     >
                       {isBusy && busyAction?.status === "cancelled" ? "Cancelling..." : "Cancel"}

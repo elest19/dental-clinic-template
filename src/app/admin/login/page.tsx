@@ -94,14 +94,14 @@ export default function AdminLoginPage() {
             </div>
           ) : null}
 
-          <Button type="submit" className="w-full bg-[#E8896B] text-white hover:bg-[#db7f5e]">
+          <Button type="submit" className="w-full bg-[#B75E3B] text-white hover:bg-[#A55333] disabled:bg-[#D8A18B] disabled:text-white/90">
             <LockKeyhole className="h-4 w-4" aria-hidden="true" />
             Sign in
           </Button>
         </form>
 
         {demoMode ? (
-          <div className="mt-6 rounded-[var(--radius-md)] border border-dashed border-[#D8C3B6] bg-[#FFF5F0] p-4 text-sm text-[#14284B]">
+          <div className="mt-6 rounded-[var(--radius-md)] border border-dashed border-slate-300 bg-[#F3F4F6] p-4 text-sm text-[#14284B]">
             <p className="font-medium">Demo account</p>
             <p className="mt-2">Email: {DEMO_ADMIN_EMAIL}</p>
             <p>Password: {DEMO_ADMIN_PASSWORD}</p>

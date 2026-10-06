@@ -68,6 +68,29 @@ export function Navbar({ variant = "home" }: { variant?: "home" | "detail" }) {
   }, [servicesOpen]);
 
   useEffect(() => {
+    if (!open) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  useEffect(() => {
     // Detail pages have no section[id] anchors and never switch to transparent.
     if (isDetail) return;
 
@@ -306,108 +329,152 @@ export function Navbar({ variant = "home" }: { variant?: "home" | "detail" }) {
         </div>
       </div>
 
-      {open ? (
-        <div id="mobile-menu" className="border-t border-border bg-background text-foreground md:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6" aria-label="Mobile navigation">
-            {items.map((item) => {
-              const section = item.href.replace("/#", "").replace("/", "");
-              const isActive = activeSection === section;
-
-              if (item.label === "Services") {
-                return (
-                  <div key={item.label}>
-                    <div className="flex items-center gap-1">
-                      <Link
-                        href={item.href}
-                        onClick={() => setOpen(false)}
-                        aria-current={isActive ? "page" : undefined}
-                        className={cn(
-                          "flex-1 rounded-[var(--radius-md)] px-3 py-2 text-base font-medium",
-                          isActive ? "bg-surface text-primary" : "text-foreground",
-                        )}
-                      >
-                        {item.label}
-                      </Link>
-                      <button
-                        type="button"
-                        aria-expanded={mobileServicesOpen}
-                        aria-label={mobileServicesOpen ? "Close Services submenu" : "Open Services submenu"}
-                        onClick={() => setMobileServicesOpen((value) => !value)}
-                        className="rounded-[var(--radius-md)] p-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                      >
-                        <ChevronDown
-                          size={18}
-                          aria-hidden="true"
-                          className={cn("transition-transform duration-200", mobileServicesOpen && "rotate-180")}
-                        />
-                      </button>
-                    </div>
-
-                    <AnimatePresence initial={false}>
-                      {mobileServicesOpen ? (
-                      <motion.div
-                        key="mobile-services"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={menuTransition}
-                        className="overflow-hidden"
-                      >
-                    <ul className="mb-2 ml-3 border-l border-border pl-3">
-                      {serviceCategories.map((category) => (
-                        <li key={category.slug}>
-                          <p className="pt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
-                            {category.name}
-                          </p>
-                          <ul>
-                            {services
-                              .filter((service) => service.categorySlug === category.slug)
-                              .map((service) => (
-                                <li key={service.slug}>
-                                  <Link
-                                    href={`/services/${service.categorySlug}/${service.slug}`}
-                                    onClick={() => setOpen(false)}
-                                    className="block py-1.5 text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary"
-                                  >
-                                    {service.name}
-                                  </Link>
-                                </li>
-                              ))}
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
-                      </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "rounded-[var(--radius-md)] px-3 py-2 text-base font-medium",
-                    isActive ? "bg-surface text-primary" : "text-foreground",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-            <Link
-              href="/#book"
+      <AnimatePresence>
+        {open ? (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close mobile menu"
+              className="fixed inset-0 z-40 bg-[#14284B]/40 backdrop-blur-[1px] md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-[var(--radius-md)] bg-accent px-4 py-3 text-center text-sm font-medium text-foreground"
+            />
+
+            <motion.aside
+              id="mobile-menu"
+              initial={{ x: -320, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -320, opacity: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="fixed inset-y-0 left-0 z-50 w-[280px] overflow-y-auto border-r border-border bg-background text-foreground shadow-2xl md:hidden"
+              aria-label="Mobile navigation sidebar"
             >
-              Book an Appointment
-            </Link>
-          </nav>
-        </div>
-      ) : null}
+              <div className="flex items-center justify-between border-b border-border px-4 py-4">
+                <Link href="/#home" onClick={() => setOpen(false)} className="flex items-center gap-3" aria-label="BrightSmile Dental Clinic home">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-border bg-surface text-lg font-semibold text-primary">
+                    B
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">BrightSmile</p>
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Dental Clinic</p>
+                  </div>
+                </Link>
+
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  onClick={() => setOpen(false)}
+                  className="flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] border border-border bg-surface text-foreground transition-colors hover:bg-surface/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  <X size={18} aria-hidden="true" />
+                </button>
+              </div>
+
+              <nav className="flex flex-col gap-1 px-4 py-4" aria-label="Mobile navigation">
+                {items.map((item) => {
+                  const section = item.href.replace("/#", "").replace("/", "");
+                  const isActive = activeSection === section;
+
+                  if (item.label === "Services") {
+                    return (
+                      <div key={item.label}>
+                        <div className="flex items-center gap-1">
+                          <Link
+                            href={item.href}
+                            onClick={() => setOpen(false)}
+                            aria-current={isActive ? "page" : undefined}
+                            className={cn(
+                              "flex-1 rounded-[var(--radius-md)] px-3 py-2 text-base font-medium",
+                              isActive ? "bg-surface text-primary" : "text-foreground",
+                            )}
+                          >
+                            {item.label}
+                          </Link>
+                          <button
+                            type="button"
+                            aria-expanded={mobileServicesOpen}
+                            aria-label={mobileServicesOpen ? "Close Services submenu" : "Open Services submenu"}
+                            onClick={() => setMobileServicesOpen((value) => !value)}
+                            className="rounded-[var(--radius-md)] p-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                          >
+                            <ChevronDown
+                              size={18}
+                              aria-hidden="true"
+                              className={cn("transition-transform duration-200", mobileServicesOpen && "rotate-180")}
+                            />
+                          </button>
+                        </div>
+
+                        <AnimatePresence initial={false}>
+                          {mobileServicesOpen ? (
+                            <motion.div
+                              key="mobile-services"
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={menuTransition}
+                              className="overflow-hidden"
+                            >
+                              <ul className="mb-2 ml-3 border-l border-border pl-3">
+                                {serviceCategories.map((category) => (
+                                  <li key={category.slug}>
+                                    <p className="pt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+                                      {category.name}
+                                    </p>
+                                    <ul>
+                                      {services
+                                        .filter((service) => service.categorySlug === category.slug)
+                                        .map((service) => (
+                                          <li key={service.slug}>
+                                            <Link
+                                              href={`/services/${service.categorySlug}/${service.slug}`}
+                                              onClick={() => setOpen(false)}
+                                              className="block py-1.5 text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary"
+                                            >
+                                              {service.name}
+                                            </Link>
+                                          </li>
+                                        ))}
+                                    </ul>
+                                  </li>
+                                ))}
+                              </ul>
+                            </motion.div>
+                          ) : null}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "rounded-[var(--radius-md)] px-3 py-2 text-base font-medium",
+                        isActive ? "bg-surface text-primary" : "text-foreground",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+                <Link
+                  href="/#book"
+                  onClick={() => setOpen(false)}
+                  className="mt-2 rounded-[var(--radius-md)] bg-accent px-4 py-3 text-center text-sm font-medium text-foreground"
+                >
+                  Book an Appointment
+                </Link>
+              </nav>
+            </motion.aside>
+          </>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }

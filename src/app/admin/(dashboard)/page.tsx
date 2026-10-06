@@ -1,14 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { CalendarDays, ClipboardList, Filter, Menu, Search, ShieldCheck } from "lucide-react";
+import { CalendarDays, CheckCircle2, CircleX, ClipboardList, Clock3, Filter, Menu, Search, ShieldCheck } from "lucide-react";
 
 import { AppointmentDrawer } from "@/components/admin/AppointmentDrawer";
 import { AppointmentTable } from "@/components/admin/AppointmentTable";
+import { ConfirmDialog } from "@/components/admin/Modal";
 import { Pagination, PAGE_SIZE } from "@/components/admin/Pagination";
 import { StatCard } from "@/components/admin/StatCard";
 import { Button } from "@/components/ui/button";
 import {
+  DEMO_TODAY,
   deleteAppointment,
   listAppointments,
   type Appointment,
@@ -28,6 +30,10 @@ export default function AppointmentsPage() {
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [busyAction, setBusyAction] = useState<{ id: string; status: AppointmentStatus } | null>(null);
+  const [confirmDialog, setConfirmDialog] = useState<{
+    kind: "cancel" | "delete";
+    appointment: Appointment;
+  } | null>(null);
 
   const loadAppointments = useCallback(async () => {
     setLoading(true);
@@ -90,8 +96,7 @@ export default function AppointmentsPage() {
     const pending = appointments.filter((appointment) => appointment.status === "pending").length;
     const confirmedThisWeek = appointments.filter((appointment) => {
       const date = new Date(appointment.createdAt);
-      const now = new Date();
-      const diff = now.getTime() - date.getTime();
+      const diff = DEMO_TODAY.getTime() - date.getTime();
       return appointment.status === "confirmed" && diff >= 0 && diff <= 1000 * 60 * 60 * 24 * 7;
     }).length;
     const cancelled = appointments.filter((appointment) => appointment.status === "cancelled").length;
@@ -125,10 +130,6 @@ export default function AppointmentsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (typeof window !== "undefined" && !window.confirm("Delete this appointment request?")) {
-      return;
-    }
-
     const deleted = await deleteAppointment(id);
     if (!deleted) {
       return;
@@ -141,48 +142,42 @@ export default function AppointmentsPage() {
     setToast("Appointment deleted");
   };
 
+  const openCancelDialog = (appointment: Appointment) => {
+    setConfirmDialog({ kind: "cancel", appointment });
+  };
+
+  const openDeleteDialog = (appointment: Appointment) => {
+    setConfirmDialog({ kind: "delete", appointment });
+  };
+
+  const handleConfirmDialogAction = async () => {
+    if (!confirmDialog) {
+      return;
+    }
+
+    if (confirmDialog.kind === "cancel") {
+      await handleStatusChange(confirmDialog.appointment.id, "cancelled");
+    } else {
+      await handleDelete(confirmDialog.appointment.id);
+    }
+
+    setConfirmDialog(null);
+  };
+
   return (
     <>
       <header className="mb-6 border-b border-border pb-4">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 xl:hidden">
-            <button
-              type="button"
-              aria-label="Open admin menu"
-              onClick={() => {
-                const menuButton = document.querySelector("[data-admin-menu-toggle]") as HTMLElement | null;
-                if (menuButton) {
-                  menuButton.click();
-                }
-              }}
-              data-admin-menu-toggle
-              className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] border border-border bg-white text-[#14284B] shadow-sm transition-colors hover:bg-[#F3F5F7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BB5A8] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F1E9]"
-            >
-              <Menu className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[#14284B] text-sm font-semibold text-white">
-                B
-              </div>
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#2BB5A8]">BrightSmile</p>
-                <p className="text-sm font-medium text-[#14284B]">Admin</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <h1 className="text-2xl font-semibold text-[#14284B] md:text-3xl">Appointments</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Review incoming requests and keep the clinic schedule moving.</p>
-          </div>
+        <div className="min-w-0">
+          <h1 className="text-2xl font-semibold text-[#14284B] md:text-3xl">Appointments</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Review incoming requests and keep the clinic schedule moving.</p>
         </div>
       </header>
 
-      <section className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Total requests" value={stats.total} icon={<ClipboardList className="h-5 w-5" aria-hidden="true" />} />
-        <StatCard label="Pending" value={stats.pending} icon={<Filter className="h-5 w-5" aria-hidden="true" />} />
-        <StatCard label="Confirmed this week" value={stats.confirmedThisWeek} icon={<ShieldCheck className="h-5 w-5" aria-hidden="true" />} />
-        <StatCard label="Cancelled" value={stats.cancelled} icon={<CalendarDays className="h-5 w-5" aria-hidden="true" />} />
+      <section className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <StatCard label="Total requests" value={stats.total} icon={<CalendarDays className="h-4 w-4" aria-hidden="true" />} />
+        <StatCard label="Pending" value={stats.pending} icon={<Clock3 className="h-4 w-4" aria-hidden="true" />} />
+        <StatCard label="Confirmed this week" value={stats.confirmedThisWeek} icon={<CheckCircle2 className="h-4 w-4" aria-hidden="true" />} />
+        <StatCard label="Cancelled" value={stats.cancelled} icon={<CircleX className="h-4 w-4" aria-hidden="true" />} />
       </section>
 
       <section className="rounded-[var(--radius-md)] border border-border bg-white p-4 md:p-5">
@@ -190,8 +185,8 @@ export default function AppointmentsPage() {
           <div>
             <h2 className="text-xl font-semibold text-[#14284B]">Appointment requests</h2>
           </div>
-          <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto">
-            <label className="relative block min-w-0 flex-1">
+          <div className="flex w-full flex-col gap-2 md:w-auto">
+            <label className="relative block w-full min-w-0 sm:flex-1">
               <span className="sr-only">Search appointments</span>
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden="true" />
               <input
@@ -202,42 +197,44 @@ export default function AppointmentsPage() {
                   setSearchTerm(event.target.value);
                 }}
                 placeholder="Search name, email or phone"
-                className="w-full min-w-0 flex-1 rounded-[var(--radius-md)] border border-border bg-[#F9FAFB] py-2.5 pl-9 pr-3 text-sm text-[#14284B] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BB5A8] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                className="w-full min-w-0 flex-1 rounded-[var(--radius-md)] border border-border bg-[#F9FAFB] py-2.5 pl-9 pr-3 text-sm text-[#14284B] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               />
             </label>
 
-            <select
-              aria-label="Filter appointments by status"
-              value={statusFilter}
-              onChange={(event) => {
-                setPage(1);
-                setStatusFilter(event.target.value as "all" | AppointmentStatus);
-              }}
-              className="rounded-[var(--radius-md)] border border-border bg-[#F9FAFB] px-3 py-2.5 text-sm text-[#14284B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BB5A8] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            >
-              <option value="all">All statuses</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
+            <div className="flex gap-2">
+              <select
+                aria-label="Filter appointments by status"
+                value={statusFilter}
+                onChange={(event) => {
+                  setPage(1);
+                  setStatusFilter(event.target.value as "all" | AppointmentStatus);
+                }}
+                className="min-w-0 flex-1 rounded-[var(--radius-md)] border border-border bg-[#F9FAFB] px-3 py-2.5 text-sm text-[#14284B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
 
-            <select
-              aria-label="Sort appointments"
-              value={`${sortField}-${sortDirection}`}
-              onChange={(event) => {
-                const [field, direction] = event.target.value.split("-") as ["preferredDate" | "createdAt", "asc" | "desc"];
-                setPage(1);
-                setSortField(field);
-                setSortDirection(direction);
-              }}
-              className="rounded-[var(--radius-md)] border border-border bg-[#F9FAFB] px-3 py-2.5 text-sm text-[#14284B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2BB5A8] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            >
-              <option value="preferredDate-asc">Date: soonest</option>
-              <option value="preferredDate-desc">Date: latest</option>
-              <option value="createdAt-desc">Newest requests</option>
-              <option value="createdAt-asc">Oldest requests</option>
-            </select>
+              <select
+                aria-label="Sort appointments"
+                value={`${sortField}-${sortDirection}`}
+                onChange={(event) => {
+                  const [field, direction] = event.target.value.split("-") as ["preferredDate" | "createdAt", "asc" | "desc"];
+                  setPage(1);
+                  setSortField(field);
+                  setSortDirection(direction);
+                }}
+                className="min-w-0 flex-1 rounded-[var(--radius-md)] border border-border bg-[#F9FAFB] px-3 py-2.5 text-sm text-[#14284B] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                <option value="preferredDate-asc">Date: soonest</option>
+                <option value="preferredDate-desc">Date: latest</option>
+                <option value="createdAt-desc">Newest requests</option>
+                <option value="createdAt-asc">Oldest requests</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -255,13 +252,13 @@ export default function AppointmentsPage() {
           <div className="rounded-[var(--radius-md)] border border-red-200 bg-red-50 p-8 text-center">
             <p className="text-lg font-semibold text-[#14284B]">Unable to load appointment requests</p>
             <p className="mt-2 text-sm text-red-700">{error}</p>
-            <Button type="button" onClick={() => void loadAppointments()} className="mt-4 bg-[#14284B] text-white hover:bg-[#1d355e]">
+            <Button type="button" onClick={() => void loadAppointments()} className="mt-4 bg-[#B75E3B] text-white hover:bg-[#A55333]">
               Retry
             </Button>
           </div>
         ) : filteredAppointments.length === 0 ? (
           <div className="rounded-[var(--radius-md)] border border-dashed border-border bg-[#F9FAFB] p-8 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#EAF7F6] text-[#14284B]">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F7E8E1] text-[#14284B]">
               <Search className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="mt-4 text-lg font-semibold text-[#14284B]">No appointment requests match your filters</h3>
@@ -274,6 +271,7 @@ export default function AppointmentsPage() {
               selectedId={selectedId}
               onSelect={(id) => setSelectedId(id)}
               onStatusAction={(id, status) => void handleInlineStatus(id, status)}
+              onCancelRequest={openCancelDialog}
               busyAction={busyAction}
             />
 
@@ -298,8 +296,36 @@ export default function AppointmentsPage() {
         open={Boolean(selectedAppointment)}
         onClose={() => setSelectedId(null)}
         onStatusChange={handleStatusChange}
-        onDelete={handleDelete}
+        onDelete={(id) => {
+          const appointment = appointments.find((item) => item.id === id);
+          if (appointment) {
+            openDeleteDialog(appointment);
+          }
+        }}
+        onCancelRequest={openCancelDialog}
       />
+
+      {confirmDialog ? (
+        <ConfirmDialog
+          open={Boolean(confirmDialog)}
+          onClose={() => setConfirmDialog(null)}
+          onConfirm={() => {
+            void handleConfirmDialogAction();
+          }}
+          title={
+            confirmDialog.kind === "cancel"
+              ? `Cancel ${confirmDialog.appointment.fullName}'s request?`
+              : `Delete ${confirmDialog.appointment.fullName}'s request?`
+          }
+          description={
+            confirmDialog.kind === "cancel"
+              ? "This will mark the appointment as cancelled and keep it in the request list for record purposes."
+              : "This action permanently removes the request from the clinic queue and cannot be undone."
+          }
+          confirmLabel={confirmDialog.kind === "cancel" ? "Cancel appointment" : "Delete request"}
+          destructive={confirmDialog.kind === "delete"}
+        />
+      ) : null}
     </>
   );
 }
