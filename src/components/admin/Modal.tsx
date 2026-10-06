@@ -32,8 +32,9 @@ export function Modal({
 }) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
-  const titleId = useId();
-  const descriptionId = description ? useId() : undefined;
+  const generatedId = useId();
+  const titleId = `${generatedId}-title`;
+  const descriptionId = description ? `${generatedId}-description` : undefined;
 
   useEffect(() => {
     if (!open) {

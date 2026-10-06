@@ -53,8 +53,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => {
     if (!mobileSidebarOpen) {
-      const previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = previousOverflow;
       return;
     }
 
@@ -74,10 +72,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     );
     focusTarget?.focus();
 
+    const triggerButton = menuButtonRef.current;
+
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
-      menuButtonRef.current?.focus();
+      triggerButton?.focus();
     };
   }, [mobileSidebarOpen]);
 
