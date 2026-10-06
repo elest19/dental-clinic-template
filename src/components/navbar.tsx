@@ -235,6 +235,7 @@ export function Navbar({ variant = "home" }: { variant?: "home" | "detail" }) {
                               <div key={category.slug} className="flex flex-col">
                                 <Link
                                   href={`/services/${category.slug}`}
+                                  prefetch={false}
                                   onClick={() => setServicesOpen(false)}
                                   className="rounded-sm font-semibold text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                                 >
@@ -246,6 +247,7 @@ export function Navbar({ variant = "home" }: { variant?: "home" | "detail" }) {
                                     <li key={service.slug}>
                                       <Link
                                         href={`/services/${service.categorySlug}/${service.slug}`}
+                                        prefetch={false}
                                         onClick={() => setServicesOpen(false)}
                                         className="text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                                       >
@@ -263,6 +265,7 @@ export function Navbar({ variant = "home" }: { variant?: "home" | "detail" }) {
                           <p className="text-sm text-muted-foreground">Not sure which treatment you need?</p>
                           <Link
                             href="/#contact"
+                            prefetch={false}
                             onClick={() => setServicesOpen(false)}
                             className="text-sm font-medium text-primary underline underline-offset-4 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                           >
@@ -431,6 +434,7 @@ export function Navbar({ variant = "home" }: { variant?: "home" | "detail" }) {
                                           <li key={service.slug}>
                                             <Link
                                               href={`/services/${service.categorySlug}/${service.slug}`}
+                                              prefetch={false}
                                               onClick={() => setOpen(false)}
                                               className="block py-1.5 text-sm text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:text-primary"
                                             >

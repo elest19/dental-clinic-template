@@ -23,8 +23,8 @@ export function CategoryDetail({ category }: { category: ServiceCategory }) {
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((service) => (
-            <ServiceCard key={service.slug} service={service} />
+          {items.map((service, index) => (
+            <ServiceCard key={service.slug} service={service} priority={index < 3} />
           ))}
         </div>
 

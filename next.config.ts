@@ -39,6 +39,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     // All imagery is served locally from /public/images — no remote hosts allowed.
+    minimumCacheTTL: 604800,
   },
   async redirects() {
     return legacyServiceRedirects;

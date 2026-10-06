@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { ServiceImage } from "@/components/service-image";
 import { formatPrice, type Service } from "@/content/services";
 
-export function ServiceCard({ service }: { service: Service }) {
+export function ServiceCard({ service, priority = false }: { service: Service; priority?: boolean }) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-border bg-white/80 transition-colors hover:border-primary/40 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
       <Link
@@ -20,7 +20,8 @@ export function ServiceCard({ service }: { service: Service }) {
         image={service.image}
         alt={service.image?.alt}
         ratio="aspect-[4/3]"
-        sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
+        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+        priority={priority}
         imgClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
       />
 

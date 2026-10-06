@@ -157,7 +157,7 @@ export function MainPage() {
             />
 
             <div className="mt-10 grid gap-6 md:grid-cols-2">
-              {serviceCategories.map((category) => {
+              {serviceCategories.map((category, index) => {
                 const categoryServices = getServicesByCategory(category.slug);
                 const lowestPrice = getCategoryStartingPrice(category.slug);
 
@@ -178,6 +178,7 @@ export function MainPage() {
                       alt={category.image?.alt}
                       ratio="aspect-[16/10]"
                       sizes="(min-width: 768px) 45vw, 100vw"
+                      priority={index < 2}
                       imgClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     />
 
