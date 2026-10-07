@@ -1,4 +1,4 @@
-export type CardImage = { src: string; alt: string };
+export type CardImage = { src: string; alt: string; focus?: string };
 export type ServiceCategory = {
   slug: string;
   name: string;

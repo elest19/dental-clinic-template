@@ -36,6 +36,8 @@ export function ServiceImage({
   const showFallback = !image?.src || failed;
   const label = image?.alt ?? alt ?? "";
 
+  const objectPosition = image?.focus ?? "center";
+
   return (
     <div className={cn("relative overflow-hidden bg-surface", ratio, className)}>
       {showFallback ? (
@@ -66,6 +68,7 @@ export function ServiceImage({
           priority={priority}
           onError={() => setFailed(true)}
           className={cn("object-cover", imgClassName)}
+          style={{ objectPosition }}
         />
       )}
     </div>

@@ -16,9 +16,10 @@ export type HeroVideo = {
 export const siteConfig = {
   name: "BrightSmile Dental Clinic",
   shortName: "BrightSmile",
-  tagline: "Family and cosmetic dental care in Makati.",
+  tagline: "Modern dental care focused on your comfort, oral health, and confidence.",
+  heroSubtitle: "Modern dental care focused on your comfort, oral health, and confidence.",
   description:
-    "BrightSmile Dental Clinic in Makati offers check-ups, cleanings, fillings, whitening, braces, and emergency appointments.",
+    "Modern dental care focused on your comfort, oral health, and confidence.",
   email: "hello@brightsmiledental.com",
   phone: "+63 (02) 555 0198",
   phoneHref: "+63025550198",
@@ -29,7 +30,6 @@ export const siteConfig = {
     "https://www.google.com/maps/dir/?api=1&destination=145%20Harbor%20View%20Avenue%2C%20Makati%20City%2C%20Metro%20Manila%201200",
   currency: "₱",
   heroNote: "Open Monday–Saturday • emergency care available",
-  heroSubtitle: "Check-ups, cleanings, fillings, whitening, and braces, six days a week.",
   availabilityNote: "Same-week appointments available for new patients.",
   heroVideo: undefined as HeroVideo | undefined,
   openingHours: [
@@ -57,7 +57,6 @@ export const navItems = [
   { label: "Contact Us", href: "/#contact" },
 ] as const;
 
-/** Legal links open the legal modal from the footer. */
 export const legalLinks = [
   { label: "Terms of Service", key: "terms" },
   { label: "Privacy Policy", key: "privacy" },

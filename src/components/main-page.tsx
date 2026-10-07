@@ -156,52 +156,55 @@ export function MainPage() {
               description={serviceSection.description}
             />
 
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-2 xl:grid-cols-4">
               {serviceCategories.map((category, index) => {
                 const categoryServices = getServicesByCategory(category.slug);
                 const lowestPrice = getCategoryStartingPrice(category.slug);
 
                 return (
-                  <Card
-                    key={category.slug}
-                    className="group relative flex h-full flex-col overflow-hidden p-0 transition-colors hover:border-primary/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
-                  >
+                  <div key={category.slug} className="min-w-0">
                     <Link
                       href={`/services/${category.slug}`}
-                      className="absolute inset-0 z-10 rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-[var(--radius-md)] border border-border bg-card text-left transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       <span className="sr-only">View all {category.name} services</span>
-                    </Link>
 
-                    <ServiceImage
-                      image={category.image}
-                      alt={category.image?.alt}
-                      ratio="aspect-[16/10]"
-                      sizes="(min-width: 768px) 45vw, 100vw"
-                      priority={index < 2}
-                      imgClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                    />
+                      <ServiceImage
+                        image={category.image}
+                        alt={category.image?.alt}
+                        ratio="aspect-[4/3] sm:aspect-[3/2]"
+                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 50vw, (min-width: 640px) 50vw, 100vw"
+                        priority={index < 2}
+                        imgClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                      />
 
-                    <div className="flex flex-1 flex-col p-5">
-                      <h3 className="font-display text-2xl text-foreground transition-colors group-hover:text-primary">
-                        {category.name}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{category.description}</p>
+                      <div className="flex flex-1 flex-col p-3 sm:p-5">
+                        <h3 className="font-display text-lg text-balance text-foreground transition-colors group-hover:text-primary sm:text-2xl">
+                          {category.name}
+                        </h3>
+                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground sm:line-clamp-none">
+                          {category.description}
+                        </p>
 
-                      <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
-                        <span className="text-sm text-muted-foreground">
-                          {categoryServices.length} {categoryServices.length === 1 ? "service available" : "services available"}
+                        <div className="mt-4 flex flex-col gap-1 text-[11px] text-muted-foreground sm:mt-5 sm:flex-row sm:items-center sm:justify-between sm:text-sm">
+                          <span>
+                            <span className="sm:hidden">{categoryServices.length} services</span>
+                            <span className="hidden sm:inline">{categoryServices.length} services available</span>
+                          </span>
+                          {lowestPrice ? (
+                            <span className="font-medium text-foreground">
+                              <span className="sm:hidden">from {formatPrice(lowestPrice)}</span>
+                              <span className="hidden sm:inline">ranges from {formatPrice(lowestPrice)}</span>
+                            </span>
+                          ) : null}
+                        </div>
+
+                        <span className="mt-auto inline-flex min-h-11 items-center gap-2 pt-4 text-sm font-medium text-primary">
+                          View services <ArrowRight className="h-4 w-4" />
                         </span>
-                        {lowestPrice ? (
-                          <span className="text-sm font-semibold text-foreground">ranges from {formatPrice(lowestPrice)}</span>
-                        ) : null}
                       </div>
-
-                      <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                        View services <ArrowRight className="h-4 w-4" />
-                      </span>
-                    </div>
-                  </Card>
+                    </Link>
+                  </div>
                 );
               })}
             </div>
