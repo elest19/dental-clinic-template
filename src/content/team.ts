@@ -20,7 +20,7 @@ export const leadDentist: TeamMember = {
   role: "Lead General Dentist",
   bio: "Sees patients for check-ups, cleanings, and fillings, and explains each step before she starts.",
   image: {
-    src: "/images/team/dr-maria-reyes.jpg",
+    src: "/images/team/dr-maria-reyes.webp",
     alt: "Dr. Maria Reyes, lead dentist",
     width: 1200,
     height: 1800,
@@ -34,7 +34,7 @@ export const teamMembers: TeamMember[] = [
     role: "Cosmetic & Restorative Dentist",
     bio: "Handles whitening, veneers, crowns, and bridges, and quotes the full price before treatment begins.",
     image: {
-      src: "/images/team/dr-ethan-soriano.jpg",
+      src: "/images/team/dr-ethan-soriano.webp",
       alt: "Dr. Ethan Soriano, cosmetic dentist",
       width: 1200,
       height: 1800,
@@ -46,7 +46,7 @@ export const teamMembers: TeamMember[] = [
     role: "Orthodontic Specialist",
     bio: "Fits braces and clear aligners, and walks you through each stage and its cost before you commit.",
     image: {
-      src: "/images/team/dr-caleb-tan.jpg",
+      src: "/images/team/dr-caleb-tan.webp",
       alt: "Dr. Caleb Tan, orthodontic specialist",
       width: 1200,
       height: 1798,
@@ -54,3 +54,4 @@ export const teamMembers: TeamMember[] = [
     },
   },
 ];
+

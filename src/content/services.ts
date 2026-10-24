@@ -36,7 +36,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Check-ups, cleanings and everyday care to keep your teeth and gums healthy.",
     order: 1,
     image: {
-      src: "/images/services/categories/general-dentistry.jpg",
+      src: "/images/services/categories/general-dentistry.webp",
       alt: "Dentist completing a general oral examination of a patient",
     },
   },
@@ -47,7 +47,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Whitening, bonding and veneers for changing how your smile looks.",
     order: 2,
     image: {
-      src: "/images/services/categories/cosmetic-dentistry.jpg",
+      src: "/images/services/categories/cosmetic-dentistry.webp",
       alt: "Patient smiling after a cosmetic dental consultation with her clinician",
     },
   },
@@ -58,7 +58,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Repair or replace damaged and missing teeth so you can chew and smile normally again.",
     order: 3,
     image: {
-      src: "/images/services/categories/restorative-dentistry.jpg",
+      src: "/images/services/categories/restorative-dentistry.webp",
       alt: "Custom dental crown being fitted to a prepared tooth",
     },
   },
@@ -69,7 +69,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Braces, children's care, jaw pain and other needs beyond a routine visit.",
     order: 4,
     image: {
-      src: "/images/services/categories/specialty-services.jpg",
+      src: "/images/services/categories/specialty-services.webp",
       alt: "Dental specialist explaining a detailed treatment plan to a patient",
     },
   },
@@ -86,7 +86,7 @@ export const services: Service[] = [
       "This is where most visits start. We check your teeth and gums, treat small problems like cavities before they get bigger, and explain what's going on in plain language.",
     startingPrice: 800,
     image: {
-      src: "/images/services/general-dentistry.jpg",
+      src: "/images/services/general-dentistry.webp",
       alt: "Dentist completing a general oral examination of a patient",
     },
     whatToExpect: [
@@ -112,7 +112,7 @@ export const services: Service[] = [
     startingPrice: 1200,
     popular: true,
     image: {
-      src: "/images/services/dental-cleaning.jpg",
+      src: "/images/services/dental-cleaning.webp",
       alt: "Hygienist performing a professional teeth cleaning with an ultrasonic scaler",
     },
     whatToExpect: [
@@ -138,7 +138,7 @@ export const services: Service[] = [
     startingPrice: 5000,
     popular: true,
     image: {
-      src: "/images/services/teeth-whitening.jpg",
+      src: "/images/services/teeth-whitening.webp",
       alt: "Patient receiving a professional teeth whitening treatment",
     },
     whatToExpect: [
@@ -164,7 +164,7 @@ export const services: Service[] = [
     startingPrice: 35000,
     popular: true,
     image: {
-      src: "/images/services/orthodontics-braces.jpg",
+      src: "/images/services/orthodontics-braces.webp",
       alt: "Orthodontic braces being fitted and adjusted to straighten teeth",
     },
     whatToExpect: [
@@ -191,7 +191,7 @@ export const services: Service[] = [
     priceNote: "per tooth",
     popular: true,
     image: {
-      src: "/images/services/dental-implants.jpg",
+      src: "/images/services/dental-implants.webp",
       alt: "Dental implant fixture being placed into the jawbone during surgery",
     },
     whatToExpect: [
@@ -217,7 +217,7 @@ export const services: Service[] = [
     startingPrice: 8000,
     priceNote: "per unit",
     image: {
-      src: "/images/services/crowns-and-bridges.jpg",
+      src: "/images/services/crowns-and-bridges.webp",
       alt: "Custom dental crown and bridge being fitted and adjusted",
     },
     whatToExpect: [
@@ -241,7 +241,7 @@ export const services: Service[] = [
       "Kids do better when the first visits are short and calm. We take our time, explain things at their level, and focus on keeping their teeth healthy with cleanings, fluoride and regular check-ups as they grow.",
     startingPrice: 1000,
     image: {
-      src: "/images/services/pediatric-dentistry.jpg",
+      src: "/images/services/pediatric-dentistry.webp",
       alt: "Young child sitting comfortably during a paediatric dental checkup",
     },
     whatToExpect: [
@@ -265,7 +265,7 @@ export const services: Service[] = [
       "We look over your teeth, gums, bite and the soft tissue in your mouth, and take X-rays when needed. Catching a cavity or gum problem early usually means a simpler, cheaper fix.",
     startingPrice: 500,
     image: {
-      src: "/images/services/dental-examinations.jpg",
+      src: "/images/services/dental-examinations.webp",
       alt: "Clinician reviewing dental X-rays with a patient during an examination",
     },
     whatToExpect: [
@@ -290,7 +290,7 @@ export const services: Service[] = [
       "If you're in pain, or you've broken or knocked out a tooth, call us as soon as you can. We'll see you quickly, ease the pain, and then tell you what needs to happen next.",
     startingPrice: 1500,
     image: {
-      src: "/images/services/emergency-dentistry.jpg",
+      src: "/images/services/emergency-dentistry.webp",
       alt: "Dentist treating a patient with urgent tooth pain in a clinic chair",
     },
     whatToExpect: [
@@ -316,7 +316,7 @@ export const services: Service[] = [
     startingPrice: 900,
     priceNote: "per tooth",
     image: {
-      src: "/images/services/dental-sealants.jpg",
+      src: "/images/services/dental-sealants.webp",
       alt: "Protective sealant being applied to the grooves of a back tooth",
     },
     whatToExpect: [
@@ -341,7 +341,7 @@ export const services: Service[] = [
       "When decay or a crack lets bacteria into the inside of a tooth, it can cause severe pain and abscesses. A root canal removes the infected tissue, cleans the inside and seals it up, so the pain stops and the tooth stays. With local anaesthetic, most people say it feels similar to having a filling done.",
     startingPrice: 12000,
     image: {
-      src: "/images/services/root-canal-therapy.jpg",
+      src: "/images/services/root-canal-therapy.webp",
       alt: "Dentist performing root canal therapy on a patient under local anaesthetic",
     },
     whatToExpect: [
@@ -366,7 +366,7 @@ export const services: Service[] = [
       "We shape tooth-coloured resin directly onto your tooth, harden it with a light, and polish it so it blends in. There's usually no drilling, and it often takes just one visit. It works well for small repairs, though it can stain or chip sooner than veneers.",
     startingPrice: 3500,
     image: {
-      src: "/images/services/dental-bonding.jpg",
+      src: "/images/services/dental-bonding.webp",
       alt: "Tooth-coloured bonding resin being shaped onto a chipped front tooth",
     },
     whatToExpect: [
@@ -392,7 +392,7 @@ export const services: Service[] = [
     startingPrice: 35000,
     priceNote: "per tooth",
     image: {
-      src: "/images/services/dental-veneers.jpg",
+      src: "/images/services/dental-veneers.webp",
       alt: "Thin porcelain veneer being placed onto a prepared front tooth",
     },
     whatToExpect: [
@@ -416,7 +416,7 @@ export const services: Service[] = [
       "We only pull a tooth when it can't be repaired, or when keeping it would cause more problems. We numb the area, take the tooth out as gently as we can, and give you clear instructions for the first few days. If you want to replace it afterwards, we'll go through the options.",
     startingPrice: 2500,
     image: {
-      src: "/images/services/tooth-extractions.jpg",
+      src: "/images/services/tooth-extractions.webp",
       alt: "Dentist carefully extracting a tooth with sterile instruments",
     },
     whatToExpect: [
@@ -441,7 +441,7 @@ export const services: Service[] = [
       "Dentures are made from impressions of your mouth so they sit comfortably on your gums. Partial dentures fill a few gaps, and full dentures replace a whole row. They can feel strange for the first few weeks, so we book follow-up visits to adjust the fit.",
     startingPrice: 18000,
     image: {
-      src: "/images/services/dentures.jpg",
+      src: "/images/services/dentures.webp",
       alt: "Custom removable denture being fitted and adjusted for a patient",
     },
     whatToExpect: [
@@ -466,7 +466,7 @@ export const services: Service[] = [
       "Jaw pain often comes from clenching or grinding, sometimes without you knowing it. We check how your jaw moves, feel the muscles around it, and look at your bite. Treatment usually starts simple, like a night guard and a few changes at home.",
     startingPrice: 1800,
     image: {
-      src: "/images/services/temporomandibular-joint-care.jpg",
+      src: "/images/services/temporomandibular-joint-care.webp",
       alt: "Clinician assessing a patient jaw joint for facial pain",
     },
     whatToExpect: [
@@ -491,7 +491,7 @@ export const services: Service[] = [
       "Plenty of people dread the dentist, and there's nothing embarrassing about it. Depending on the treatment and how you feel, we can offer anything from a mild relaxant to deeper sedation. We'll go over your health history and agree on the right level before we start.",
     startingPrice: 3500,
     image: {
-      src: "/images/services/sedation-dentistry.jpg",
+      src: "/images/services/sedation-dentistry.webp",
       alt: "Patient relaxed in a dental chair during sedation dentistry",
     },
     whatToExpect: [
@@ -515,7 +515,7 @@ export const services: Service[] = [
       "Teeth start to drift when you stop wearing a retainer, so it's worth sorting out quickly. We'll check whether your teeth have moved, repair the retainer if we can, and make a new one if we can't.",
     startingPrice: 2800,
     image: {
-      src: "/images/services/retainer-repair.jpg",
+      src: "/images/services/retainer-repair.webp",
       alt: "Orthodontic retainer being repaired and refitted to a patient teeth",
     },
     whatToExpect: [
@@ -559,3 +559,4 @@ export function getServiceBySlug(
 export function formatPrice(amount: number): string {
   return `₱${amount.toLocaleString("en-PH")}`;
 }
+

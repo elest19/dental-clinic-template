@@ -8,14 +8,14 @@ export type ContentImage = {
 
 export const clinicImages = {
   hero: {
-    src: "/images/clinic/hero.jpg",
+    src: "/images/clinic/hero.webp",
     alt: "Dentist speaking with a patient in a bright, modern treatment room",
     width: 2100,
     height: 1400,
     focus: "center",
   },
   about: {
-    src: "/images/clinic/about.jpg",
+    src: "/images/clinic/about.webp",
     alt: "Dental clinician examining a patient during a routine check-up",
     width: 1200,
     height: 960,

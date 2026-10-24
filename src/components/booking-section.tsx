@@ -27,7 +27,7 @@ export function BookingSection() {
       {...reveal}
     >
       <Image
-        src="/images/kid-waving.png"
+        src="/images/kid-waving.webp"
         alt=""
         aria-hidden="true"
         width={320}
